@@ -16,11 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-//everything that is in common among pages
-//can go here
-//for example top menu elements don't belong to specific page
-//top menu appears on every single page
-//so we can keep them here
+
 public class BasePage {
 
     @FindBy(css = "div[class='loader-mask shown']")
@@ -39,21 +35,11 @@ public class BasePage {
     public WebElement myUser;
 
     public BasePage() {
-        //this method requires to provide webdriver object for @FindBy
-        //and page class
-        //this means this page class
+
         PageFactory.initElements(Driver.get(), this);
     }
 
-    /**
-     * While this loading screen present, html code is a not complete
-     * Some elements can be missing
-     * Also, you won't be able to interact with any elements
-     * All actions will be intercepted
-     * Waits until loader mask (loading bar, spinning wheel) disappears
-     *
-     * @return true if loader mask is gone, false if something went wrong
-     */
+
     public boolean waitUntilLoaderMaskDisappear() {
         WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
         try {
@@ -69,15 +55,7 @@ public class BasePage {
         return false;
     }
 
-    /**
-     * This method stands for navigation in vytrack app
-     * provide tab name, for example "Fleet" as a String
-     * and module name, for example "Vehicles" as a String as well
-     * then based on these values, locators will be created
-     *
-     * @param moduleName
-     * @param subModuleName normalize-space() same line .trim() in java
-     */
+
     public void navigateTo(String moduleName, String subModuleName) {
         Actions actions = new Actions(Driver.get());
         String moduleLocator = "//*[normalize-space()='" + moduleName + "' and @class='title title-level-1']";
@@ -92,7 +70,7 @@ public class BasePage {
 
         waitUntilLoaderMaskDisappear();
 
-        BrowserUtils.clickWithWait(module); //if click is not working well
+        BrowserUtils.clickWithWait(module);
         WebElement subModule = Driver.get().findElement(By.xpath(subModuleLocator));
         if (!subModule.isDisplayed()) {
             actions.doubleClick(module).doubleClick().build().perform();
@@ -103,16 +81,14 @@ public class BasePage {
                 BrowserUtils.clickWithJS(module);
             }
         }
-        BrowserUtils.clickWithWait(subModule); //if click is not working well
-        //it waits until page is loaded and ajax calls are done
+        BrowserUtils.clickWithWait(subModule);
+
         BrowserUtils.waitForPageToLoad(10);
     }
 
-    /**
-     * @return page name, for example: Dashboard
-     */
+
     public String getPageSubTitle() {
-        //ant time we are verifying page name, or page subtitle, loader mask appears
+
         waitUntilLoaderMaskDisappear();
         BrowserUtils.waitForStaleElement(pageSubTitle);
         return pageSubTitle.getText();

@@ -9,14 +9,7 @@ import java.util.List;
 
 public class CalendarEventsStepDefinitions {
 
-    //    And user verifies that column names are displayed
-//            | TITLE             |
-//            | CALENDAR          |
-//            | START             |
-//            | END               |
-//            | RECURRENT         |
-//            | RECURRENCE        |
-//            | INVITATION STATUS |
+
     CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
 
     @Then("user verifies that column names are displayed")

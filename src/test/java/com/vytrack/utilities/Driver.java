@@ -26,10 +26,10 @@ public class Driver {
     }
 
     public static WebDriver get() {
-        //if this thread doesn't have a web driver yet - create it and add to pool
+
         if (driverPool.get() == null) {
             System.out.println("TRYING TO CREATE DRIVER");
-            // this line will tell which browser should open based on the value from properties file
+
             String browserParamFromEnv = System.getProperty("browser");
             String browser = browserParamFromEnv == null ? ConfigurationReader.getProperty("browser") : browserParamFromEnv;
             switch (browser) {
@@ -97,7 +97,7 @@ public class Driver {
                     break;
             }
         }
-        //return corresponded to thread id webdriver object
+
         return driverPool.get();
     }
     public static void close() {

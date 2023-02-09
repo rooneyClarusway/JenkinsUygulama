@@ -59,18 +59,14 @@ public class CreateCalendarEventPage extends BasePage {
 
 
     public void selectGridSetting(String name, boolean yesOrNo) {
-        //click on grid options
+
         waitUntilLoaderMaskDisappear();
         BrowserUtils.clickWithWait(gridSettingsElement);
-        //create locator for grid option based on the name
+
         String locator = "//td//label[text()='" + name + "']/../following-sibling::td//input";
-        //find element
-        //you can also call Driver.get()
+
         WebElement gridOption = Driver.get().findElement(By.xpath(locator));
-        //if param yesOrNo is true, and checkbox is not selected yet
-        //click on it
-        //or
-        //ckeckbox is selected and you want to unselect it
+
         if ((yesOrNo && !gridOption.isSelected()) || (
                 !yesOrNo && gridOption.isSelected())) {
             gridOption.click();
@@ -86,12 +82,7 @@ public class CreateCalendarEventPage extends BasePage {
         return false;
     }
 
-    /**
-     * Simple method that can select start or end date on create calendar event page
-     *
-     * @param date       format MM/dd/yyy for example 12/12/2019
-     * @param startOrEnd which date to click on start or end
-     */
+
     public void selectStartOrEndDate(String date, String startOrEnd) {
         waitUntilLoaderMaskDisappear();
         LocalDate ld = LocalDate.of(Integer.parseInt(date.substring(date.lastIndexOf("/") + 1)),
@@ -103,10 +94,10 @@ public class CreateCalendarEventPage extends BasePage {
         int day = ld.getDayOfMonth();
 
 
-        //locator for day
+
         String dayLocator = "//a[@class='ui-state-default' and text()='" + day + "']";
 
-        //click on start or end date
+
         if (startOrEnd.equalsIgnoreCase("start")) {
             BrowserUtils.waitForVisibility(startDate, 5);
             startDate.click();
@@ -115,14 +106,14 @@ public class CreateCalendarEventPage extends BasePage {
             endDate.click();
         }
 
-        //select month
+
         new Select(monthDropdown).selectByVisibleText(month);
 
 
-        //select year
+
         new Select(yearDropdown).selectByVisibleText(year + "");
 
-        //select day
+
         Driver.get().findElement(By.xpath(dayLocator)).click();
     }
 
