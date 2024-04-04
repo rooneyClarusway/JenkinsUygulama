@@ -45,7 +45,7 @@ public class BrowserUtils {
 
 
     public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
-        WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(timeToWaitInSec));
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -56,7 +56,7 @@ public class BrowserUtils {
 
 
     public static WebElement waitForClickablility(WebElement element, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -85,7 +85,7 @@ public class BrowserUtils {
                 .withTimeout(Duration.ofSeconds(15))
                 .pollingEvery(Duration.ofMillis(800))
                 .ignoring(NoSuchElementException.class)
-                .ignoring(ElementNotVisibleException.class)
+
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(WebDriverException.class);
@@ -105,7 +105,7 @@ public class BrowserUtils {
     public static void waitForPageToLoad(long timeOutInSeconds) {
         ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
         try {
-            WebDriverWait wait = new WebDriverWait(Driver.get(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
         } catch (Throwable error) {
             error.printStackTrace();
@@ -114,7 +114,7 @@ public class BrowserUtils {
 
 
     public static void waitForPageTitle(String pageTitle) {
-        WebDriverWait wait = new WebDriverWait(Driver.get(), 10);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs(pageTitle));
 
     }

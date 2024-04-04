@@ -13,8 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
-
+import java.time.Duration;
 
 
 public class BasePage {
@@ -41,7 +40,7 @@ public class BasePage {
 
 
     public boolean waitUntilLoaderMaskDisappear() {
-        WebDriverWait wait = new WebDriverWait(Driver.get(), 30);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(30));
         try {
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div[class='loader-mask shown']")));
             return true;
@@ -61,7 +60,7 @@ public class BasePage {
         String moduleLocator = "//*[normalize-space()='" + moduleName + "' and @class='title title-level-1']";
         String subModuleLocator = "//*[normalize-space()='" + subModuleName + "' and @class='title title-level-2']";
 
-        WebDriverWait wait = new WebDriverWait(Driver.get(), 20);
+        WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(20));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleLocator)));
 
         WebElement module = Driver.get().findElement(By.xpath(moduleLocator));
@@ -113,7 +112,7 @@ public class BasePage {
     }
 
     public void waitForPageSubTitle(String pageSubtitleText) {
-        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.textToBe(By.cssSelector("h1[class='oro-subtitle']"), pageSubtitleText));
+        new WebDriverWait(Driver.get(), Duration.ofSeconds(10)).until(ExpectedConditions.textToBe(By.cssSelector("h1[class='oro-subtitle']"), pageSubtitleText));
     }
 
 }

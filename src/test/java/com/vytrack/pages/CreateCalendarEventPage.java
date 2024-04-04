@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -162,7 +163,7 @@ public class CreateCalendarEventPage extends BasePage {
         waitUntilLoaderMaskDisappear();
         String startTimeToSelect = "(//li[text()='" + time + "'])[1]";
         startTime.click();
-        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
+        new WebDriverWait(Driver.get(), Duration.ofSeconds(10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
         Driver.get().findElement(By.xpath(startTimeToSelect)).click();
     }
 
@@ -175,7 +176,7 @@ public class CreateCalendarEventPage extends BasePage {
             System.out.println(e.getMessage());
             BrowserUtils.clickWithWait(startTime);
         }
-        new WebDriverWait(Driver.get(), 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
+        new WebDriverWait(Driver.get(), Duration.ofSeconds(10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(startTimeToSelect)));
         Driver.get().findElement(By.xpath(startTimeToSelect)).click();
     }
 
@@ -186,16 +187,7 @@ public class CreateCalendarEventPage extends BasePage {
         Driver.get().findElement(By.xpath(endTimeToSelect)).click();
     }
 
-    public long differenceBetweenStartTimeAndEndTime() {
-        LocalTime actualStartTime = LocalTime.parse(startTime.getAttribute("value"), DateTimeFormatter.ofPattern("h:mm a"));
-        try {
-            new WebDriverWait(Driver.get(), 3).until(ExpectedConditions.invisibilityOf(startTime));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        LocalTime actualEndTime = LocalTime.parse(endTime.getAttribute("value"), DateTimeFormatter.ofPattern("h:mm a"));
-        return ChronoUnit.HOURS.between(actualStartTime, actualEndTime);
-    }
+
 
     public void clickOnCreateCalendarEvent() {
         waitUntilLoaderMaskDisappear();
